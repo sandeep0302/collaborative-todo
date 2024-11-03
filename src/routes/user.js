@@ -7,8 +7,11 @@ const {userMiddleware} = require("../middleware/user");
 const userRouter = Router();
 
 
-userRouter.post('/signup',function(req,res){
+userRouter.post('/signup', async function(req,res){
+   const {userId,name, email,password} = req.body;
 
+   await userModel.create({
+   })
 })
 userRouter.post('/signin',function(req,res){
 
