@@ -38,6 +38,12 @@ const TodoListSchema = new mongoose.Schema(
     {timestamps:true}
 );
 
-export const userModel = mongoose.model("User",UserSchema);
-export const taskModel = mongoose.model("Task",TaskSchema);
-export const todoListModel = mongoose.model("TodoList",TodoListSchema);
+const userModel = mongoose.model("User",UserSchema);
+const taskModel = mongoose.model("Task",TaskSchema);
+const todoListModel = mongoose.model("TodoList",TodoListSchema);
+
+module.exports = {
+    userModel,
+    taskModel,
+    todoListModel
+}
