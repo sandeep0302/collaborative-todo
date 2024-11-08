@@ -1,11 +1,10 @@
-const express = require("express");
 const jwt = require("jsonwebtoken");
-const {JWT_USER_PASSWORD} = require("../config");
+const {JWT_USER_PASSWORD} = require("../../config");
 
-const token = jwt.sign({},JWT_USER_PASSWORD)
+// const token = jwt.sign({},JWT_USER_PASSWORD)
 
 function userMiddleware(req,res,next){
-    const token = req.headers.token;
+    const token = req.headers.authorization;
     const decoded = jwt.verify(token,JWT_USER_PASSWORD);
      
     if(decoded){
@@ -18,4 +17,8 @@ function userMiddleware(req,res,next){
     }
 }
 
-module.exports = userMiddleware;
+module.exports = {
+    userMiddleware,
+    JWT_USER_PASSWORD
+
+};

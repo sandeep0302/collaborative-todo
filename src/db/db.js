@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
+const {Schema,ObjectId} = mongoose;
+
+const UserSchema = new Schema({
     userId:{
         type:String,
         unique:true,
@@ -13,7 +15,7 @@ const UserSchema = new mongoose.Schema({
 {timestamps:true}
 );
 
-const TaskSchema = new mongoose.Schema(
+const TaskSchema = new Schema(
     {
         title:{type:String,required:true},
         completed:{type:Boolean,default:false},
@@ -28,12 +30,12 @@ const TaskSchema = new mongoose.Schema(
     {timestamps:true}
 );
 
-const TodoListSchema = new mongoose.Schema(
+const TodoListSchema = new Schema(
     {
-      owner:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+      owner:{type:ObjectId,ref:"User"},
       title:String,
       tasks:[TaskSchema],
-      collaborators:[{type:mongoose.Schema.Types.ObjectId,ref:"User"}],  
+      collaborators:[{type:ObjectId,ref:"User"}],  
     },
     {timestamps:true}
 );
