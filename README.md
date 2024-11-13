@@ -1,2 +1,8 @@
-This is a collabative-todo.
-In this collaborative todo we can collaborate with others for tasks completion.
+Collaborative Todo
+
+Building a platform where people can
+1.Sign Up
+2.Create a todo
+
+Tech Stack
+Node.js
