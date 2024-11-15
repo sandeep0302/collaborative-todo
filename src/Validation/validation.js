@@ -4,7 +4,7 @@ const mySchema = z.string();
 
 const userSchema = z.object({
     userId:z.string().min(1),
-    email:z.string().max(20),
+    email:z.string().min(9),
     password:z.string().min(7)
 });
 
@@ -28,7 +28,8 @@ const todoListSchema = z.object({
 module.exports = {
     userSchema,
     taskSchema,
-    todoSchema
+    todoSchema,
+    todoListSchema
 }
 
 
