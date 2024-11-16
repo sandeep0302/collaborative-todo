@@ -10,8 +10,8 @@ const app = express();
 
 
 userRouter.post('/create', async function(req,res){
+    try{
    const {userId,name, email,password} = req.body;
-
    await userModel.create({
       userId,
       name,
@@ -29,6 +29,12 @@ userRouter.post('/create', async function(req,res){
          notifications
       }
    })
+}
+catch (error) {
+   res.status.json({
+    message:"User ID or email already exists"
+   })
+}
 
 })
 
