@@ -89,7 +89,18 @@ listRouter.put('/:listId/task/:taskId',async function (req,res){
 })
 
 
+listRouter.delete('/:listId/task/:taskId', function(req,res){
+    try {
+        res.json({
+            message:"Task deleted successfully"
+        })
 
+    } catch (error) {
+        res.status(401).json({
+            message:"Task deleted successfully"
+        })
+    }
+})
 module.exports = {
     userRouter : userRouter
 } 
