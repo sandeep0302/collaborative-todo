@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 const { JWT_USER_PASSWORD } = require("../../config.js");
 const { userMiddleware } = require("../middleware/auth");
 
-const userRouter = express.Router();
+const listRouter = express.Router();
 const app = express();
 
-userRouter.post('/create', async function (req, res) {
+listRouter.post('/create', async function (req, res) {
     try {
         const { userId, title } = req.body;
         await todoModel.create({
@@ -26,14 +26,14 @@ userRouter.post('/create', async function (req, res) {
             }
         })
     } catch (error){
-        res.status.json({
+        res.status(403).json({
             message:"User not found"
            })
 
     }
 })
 
-userRouter.post('/:listId/task',async function(req,res){
+listRouter.post('/:listId/task',async function(req,res){
     try {
         const {title,assignee,priority,dueDate} = req.body;
         await todoModel.create({
@@ -42,7 +42,54 @@ userRouter.post('/:listId/task',async function(req,res){
             priority: "high",
             dueDate: "2024-10-31T12:00:00Z"
         })
+    res.json({
+        message: "Task added successfully",
+        task: {
+          id: "task1",
+          title: "Clean the house",
+          completed: false,
+          assignee: "user2",
+          priority: "high",
+          dueDate: "2024-10-31T12:00:00Z",
+          subtasks: []
+        }
+    })
     } catch (error) {
+        res.status(403).json({
+         message:"Invalid data or list not found"   
+        })
+    }
+})
+
+listRouter.put('/:listId/task/:taskId',async function (req,res){
+    try {
+        const {task} = req.body;
+
+        await todoListModel.findByIdAndUpdate({
+            completed:"true",
+        })
+        res.json({
+             message:"task successfully completed",
+             task:{
+                id:"task1",
+                title:"Clean the house",
+                completed:true,
+                assignee:"user2",
+                priority:"high",
+                dueDate:"2024-11-30T12:00:00Z",
+                subtasks:[]
+             }
+        })
+    } catch (error) {
+        res.status(401).json({
+            message:"Task not found or list not found"
+        })
         
     }
 })
+
+
+
+module.exports = {
+    userRouter : userRouter
+} 
