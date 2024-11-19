@@ -101,6 +101,43 @@ listRouter.delete('/:listId/task/:taskId', function(req,res){
         })
     }
 })
+
+listRouter.post('/:listId/collaborator', async function(req,res){
+    try {
+        const userId = req.body;
+
+        await userId.findOne()
+        res.json({
+            userId:{
+            message:"Collaborators added successfully",
+            collaborators:["users"]
+            }
+        })
+    } catch (error) {
+        res.status(401).json({
+            message:"Invalid"
+        })
+    }
+})
+listRouter.delete('/:listId/collaborator/:userId', async function(req,res){
+    try {
+        const userId = req.body;
+
+        await userId.findOne()
+        res.json({
+            userId:{
+            message:"Collaborators removed successfully",
+            collaborators:[]
+            }
+        })
+    } catch (error) {
+        res.status(401).json({
+            message:"collaborators not found"
+        })
+    }
+})
+
+listRouter
 module.exports = {
     userRouter : userRouter
 } 
