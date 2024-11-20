@@ -2,18 +2,14 @@ const mongoose = require("mongoose");
 
 const {Schema,ObjectId} = mongoose;
 
-const UserSchema = new Schema({
-    userId:{
-        type:String,
-        unique:true,
-        required:true   
-    },
-    name:String,
-    email:{type:String,unique:true,required:true},
-    password:{type:String,required:true},
-},
-{timestamps:true}
-);
+const baseSchema = new Schema({
+  name:String,
+  username:String,
+  email:String,
+  password:String,
+  profilePicture:String,
+  notification:{type:Boolean,default:true},
+});
 
 const TaskSchema = new Schema(
     {
@@ -26,26 +22,26 @@ const TaskSchema = new Schema(
             default:"medium",
         },
         dueDate:Date,
-    },
-    {timestamps:true}
-);
+        subtasks:[{title:String,completed:{type:Boolean,default:false}}],
+        assignedBy:{type:ObjectId,ref:"users",required:true},
+        assignedTo:{type:Object,ref:"users"},
+        listId:{type:ObjectId,ref:"todos"}
+    });
 
-const TodoListSchema = new Schema(
+const TodoSchema = new Schema(
     {
       owner:{type:ObjectId,ref:"User"},
       title:String,
       tasks:[TaskSchema],
-      collaborators:[{type:ObjectId,ref:"User"}],  
-    },
-    {timestamps:true}
-);
+      collaborators:[{type:ObjectId,ref:"users"}],  
+    });
 
-const userModel = mongoose.model("User",UserSchema);
-const taskModel = mongoose.model("Task",TaskSchema);
-const todoListModel = mongoose.model("TodoList",TodoListSchema);
+const User = mongoose.model("users",baseSchema);
+const Task = mongoose.model("tasks",TaskSchema);
+const Todo = mongoose.model("todos",TodoSchema);
 
 module.exports = {
-    userModel,
-    taskModel,
-    todoListModel
+    User,
+    Task,
+    Todo
 }

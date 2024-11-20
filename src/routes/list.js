@@ -121,10 +121,9 @@ listRouter.post('/:listId/collaborator', async function(req,res){
 })
 listRouter.delete('/:listId/collaborator/:userId', async function(req,res){
     try {
-        const userId = req.body;
 
-        await userId.findOne()
-        res.json({
+
+    await    res.json({
             userId:{
             message:"Collaborators removed successfully",
             collaborators:[]
