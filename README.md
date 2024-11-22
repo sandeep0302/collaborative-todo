@@ -6,3 +6,5 @@ Building a platform where people can
 
 Tech Stack
 Node.js
+Express.js
+MongoDB
