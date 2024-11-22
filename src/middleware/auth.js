@@ -1,24 +1,22 @@
 const jwt = require("jsonwebtoken");
-const {JWT_USER_PASSWORD} = require("../../config");
+require ("dotenv").config();
+const JWT_USER_PASSWORD = process.env.JWT_USER_PASSWORD;
 
-// const token = jwt.sign({},JWT_USER_PASSWORD)
 
-function userMiddleware(req,res,next){
-    const token = req.headers.authorization;
-    const decoded = jwt.verify(token,JWT_USER_PASSWORD);
-     
-    if(decoded){
-        req.userId = decoded.id;
-        next();
-    }else{
-        res.status(403).json({
-            message:"You are not signed in"
-        })
+
+function auth(req,res,next){
+   try {
+    const token = req.headers.token;
+    if(!token){
+        return res.status(401).json({message:"Access Denied.No token provided"});
     }
+
+    const decoded =  jwt.verify(token,JWT_USER_PASSWORD);
+    req.id=decoded.id;
+    return next();
+   } catch (error) {
+    return res.status(401).json({message:"Invalid or expired token."})
+   }
 }
 
-module.exports = {
-    userMiddleware,
-    JWT_USER_PASSWORD
-
-};
+module.exports = auth;
