@@ -6,9 +6,12 @@ const mongoose = require("mongoose");
 const {userRouter} = require('./src/routes/user')
 const {listRouter} = require('./src/routes/list')
 
-const app = express()
+const app = express();
 app.use(express.json());
 const port = 3000;
+
+const cors = require("cors");
+app.use(cors());
 
 app.use('/user',userRouter);
 app.use('/list',listRouter);
@@ -24,8 +27,4 @@ console.log("(Connected to Database)");
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-});
-
-app.get('/test', (req, res) => {
-    res.json({ message: 'Test route working' });
 });
