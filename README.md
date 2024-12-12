@@ -1,3 +1,9 @@
 Tech stack
 
-javascript
+Backend
+Javascript
+Node.js
+Express.js
+
+Database
+MongoDB
